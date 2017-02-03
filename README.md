@@ -1,9 +1,7 @@
 # Sudoku
 
-Originally I tried figuring out on my own how I might be  able to solve and 
-generate Sudokus. I realize I should use dictionaries or something other than lists,
-but that would seem to require a complete redesign. The scripts here are the best things 
-that have come out of that so far. 
+Originally I tried figuring out on my own how to solve and generate Sudokus. The scripts here 
+are the best things that have come out of that so far.  
 
 lookout_testing.py
 
@@ -19,8 +17,7 @@ logical solving techniques (identifying naked singles and hiden singles).
 brute_force_attempt1.py
 
 My crazy backtracking solver. Because of the way data is currently being stored in nested lists, 
-this could be a lot faster.
-Pelease excuse the mess, It's decided to upload it in all it's testing glory.
+it't pretty slow. Pelease excuse the mess. I decided to upload it in all it's messy, testing glory.
 
 
  
