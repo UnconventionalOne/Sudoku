@@ -342,6 +342,77 @@ def bruteForceTwo(board, bclist):
     return dupeBoard
 
 ###################bruteForceTwo####take 1.1################
+###################bruteForceTwo####take 1.2################
+# Try to do something to look for multiple solutions, and if second solution found, return False?
+# Works for the most part. 
+    
+def bruteForceTwoCheck(board, bclist):
+    start = time.time()
+    start2 = None
+    retry = 0
+    tic = 0 # try to see how many cylces it runs
+    bCans = getPossibles(board, bclist)
+    for Cans in bCans:
+        if [] in Cans:
+            print "No solution. Puzzle invalid. Didn't even need to run algorithm."
+            return board
+    # empties gives the positions on the board that need to be filled in
+    empties = [[x, y] for x, col in enumerate(board) for y, cell in enumerate(col) if cell == ' ']
+    dupeBoard = getBoardCopy(board)
+    i = 0
+    while i < len(empties):
+        x, y = empties[i]
+        dval = dupeBoard[x][y]
+        candidates = bCans[x][y]
+        checktime = time.time()
+        if start2 and checktime-start2 >= 5:
+            print 'Reached 5 sec timeout while checking for second answer. There may or may not be multiple answers.'
+            return returnBoard
+        elif dval != ' ':
+            if dval == candidates[-1]: #if dval == last candidate
+                if i == 0:
+                    if retry == 0:
+                        print "No solution. Puzzle invalid."
+                        end = time.time()
+                        print 'elapsed time =', end - start
+                        print 'tic =', tic
+                        return board
+                    else:
+                        end = time.time()
+                        print 'puzzle has only one answer'
+                        print 'elapsed time =', end - start
+                        print 'tic =', tic
+                        return returnBoard
+                else:
+                    dupeBoard[x][y] = ' '
+                    i -= 2
+            else: #if not last candidate
+                indx = candidates.index(dval)
+                dupeBoard[x][y] = candidates[indx+1]
+                valid = validateCell(dupeBoard, bclist, x, y)
+                if not valid:
+                    i -= 1
+        else: # if dval == ' '
+            dupeBoard[x][y] = candidates[0]
+            valid = validateCell(dupeBoard, bclist, x, y)
+            if not valid:
+                i -= 1
+##        dupeBoard[x][y] = dval
+        i += 1
+        tic += 1
+        
+        if i == len(empties) and retry == 0: #...
+            returnBoard = getBoardCopy(dupeBoard)
+            start2 = time.time()
+            retry += 1
+            i -= 1
+    end = time.time()
+    print 'elapsed time =', end - start
+    print 'tic =', tic
+    print 'multiple solutions. here are the first 2:'
+    return returnBoard, dupeBoard
+
+###################bruteForceTwo####take 1.2################
 ###################validateCell#####take 1################
 
 ##def validateCell(board, bclist, C, R):
